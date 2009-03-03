@@ -29,11 +29,28 @@ if defined?(Merb::Plugins)
     end
     
   end
+
+  # Disconnects from DB before starting reloading classes
+  #
+  # There is a problem with the pg gem driver wich causes infinite loop duing
+  # reloading process.
+  #
+  # Disconnect is one not in testing and if we use reloading classes.
+  class Merb::BootLoader::DisconnectBeforeStartTransaction < Merb::BootLoader
+    before LoadClasses
+
+    def self.run
+      if Merb::Config[:fork_for_class_load] && !Merb.testing?
+        Merb.logger.debug "Disconnecting database connection before starting transaction."
+        ::Sequel::DATABASES.each { |db| db.disconnect }
+      end
+    end
+  end
   
+  # Load generators
   generators = File.join(File.dirname(__FILE__), 'generators')
   Merb.add_generators generators / :migration
   Merb.add_generators generators / :model
   Merb.add_generators generators / :resource_controller
   Merb.add_generators generators / :session_migration
-  
 end
