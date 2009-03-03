@@ -10,13 +10,15 @@ Merb Sequel plugin uses config/database.yml for connection configuration.
 Options are:
 
 * adapter. :sqlite is assumed by default.
-* host. localhost is assumed by default.
-* username or user, default is an empty string
 * database, default is "hey_dude_configure_your_database". This should be
   either :memory: or file path for SQLite.
-* encoding or charset, default is utf8.
-* password. WARNING: default password is an empty string.
 * db_type: default is nil. Use "mssql" to connect to MSSQL using ODBC.
+* encoding or charset, default is utf8.
+* host. localhost is assumed by default.
+* logger default is Merb.logger
+* password. WARNING: default password is an empty string.
+* socket Use socket to connect to DB. 
+* username or user, default is an empty string
 
 
 = Generators
@@ -45,5 +47,8 @@ Contributions by:
 * Lance Carlson
 * Jacob Dunphy
 * Lori Holden
+* Pavel Kunc
+* e-mac
+* Piotr Usewicz
 
 Maintained by Michael S. Klishin (michael at novemberain.com)
