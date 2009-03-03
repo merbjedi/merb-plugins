@@ -4,8 +4,12 @@ if defined?(Merb::Plugins)
   require File.join(File.dirname(__FILE__) / "merb" / "orms" / "sequel" / "connection")
   Merb::Plugins.add_rakefiles "merb_sequel" / "merbtasks"
   
+  # Connects to the database and handles session
+  #
+  # Connects to the database
+  # Handels sessions
+  # Sets router to identify models using Model.pk
   class Merb::Orms::Sequel::Connect < Merb::BootLoader
-
     after BeforeAppLoads
 
     def self.run
@@ -20,6 +24,9 @@ if defined?(Merb::Plugins)
 
   end
   
+  # Disconnects from the database before forking worker
+  #
+  # TODO: Make sure this is needed or not buggy
   class Merb::Orms::Sequel::DisconnectBeforeFork < Merb::BootLoader
     after AfterAppLoads
     
